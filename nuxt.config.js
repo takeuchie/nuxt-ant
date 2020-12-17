@@ -1,4 +1,7 @@
 export default {
+  env: {
+    baseUrl: process.env.API_URL || 'http://localhost:8002'
+  },
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     title: 'nuxt-app',
@@ -8,8 +11,13 @@ export default {
       { hid: 'description', name: 'description', content: '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/png', href: 'https://yearend.com/assets/img/favicon-32x32.png?v=e06c32e2bc' }
     ]
+  },
+
+  loading: {
+    color: '#23af9f',
+    height: '5px',
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
@@ -20,6 +28,11 @@ export default {
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
     '@/plugins/antd-ui'
+  ],
+
+  modules: [
+    '@nuxtjs/axios',
+    '@nuxtjs/dotenv',
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)

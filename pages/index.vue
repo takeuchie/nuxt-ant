@@ -1,73 +1,81 @@
 <template>
-  <div class="container">
-    <div>
-      <Logo />
-      <h1 class="title">
-        nuxt-app
-      </h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-    </div>
-  </div>
+  <a-row type="flex" justify="center" :style="{ padding: '5rem' }">
+    <a-card :style="{ width: '65rem', margin: '1rem' }">
+      <a-form-model :model="form" @submit="handleSubmit" @submit.native.prevent>
+        <a-form-item label="Fair Market Value">
+          <a-input-number
+            addon-before="$"
+            :min="0.01"
+            :formatter="
+              (value) => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+            "
+            :parser="(value) => value.replace(/\$\s?|(,*)/g, '')"
+            v-model="form.marketValue"
+            style="width: 190px"
+          />
+        </a-form-item>
+
+        <a-form-item label="Quantity">
+          <a-input-number
+            :min="1"
+            :formatter="
+              (value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+            "
+            :parser="(value) => value.replace(/\$\s?|(,*)/g, '')"
+            v-model="form.quantity"
+            style="width: 190px"
+          />
+        </a-form-item>
+
+        <a-form-model-item>
+          <a-button type="primary" html-type="submit"> Refresh </a-button>
+        </a-form-model-item>
+      </a-form-model>
+      <a-row>
+        <a-input
+          :disabled="true"
+          :formatter="
+            (value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+          "
+          :parser="(value) => value.replace(/\$\s?|(,*)/g, '')"
+          v-model="result"
+          style="width: 300px"
+        />
+      </a-row>
+    </a-card>
+  </a-row>
 </template>
 
 <script>
-export default {}
+import axios from "axios";
+
+export default {
+  data() {
+    return {
+      form: {
+        marketValue: 1,
+        quantity: 10,
+      },
+      result: null,
+    };
+  },
+  methods: {
+    async handleSubmit(e) {
+      const { marketValue, quantity } = this.form
+      const baseUrl = process.env.baseUrl
+      const url = `${baseUrl}/securities`;
+      const postData = { fair_market_value: marketValue, quantity }
+      try {
+        const { data } = await axios.post(url, postData)
+        if (data) this.result = `$ ${data}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      } catch (error) {
+        console.info(error.message || error.stack);
+        this.result = error.message || error.stack
+      }
+    },
+  },
+};
 </script>
 
 <style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family:
-    'Quicksand',
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
 </style>

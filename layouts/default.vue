@@ -1,62 +1,44 @@
 <template>
-  <div>
-    <Nuxt />
-  </div>
+  <section :style="{ background: '#f2f2f2' }">
+    <a-layout-header :style="{ background: 'white', padding:'0'}">
+      <NuxtLink to="/">
+        <img
+          src="https://my.yearend.com/img/logo-circle.98993353.svg"
+          class="logo"
+        />
+      </NuxtLink>
+      <a-menu
+        mode="horizontal"
+        :style="{ lineHeight: '61px', height: '64px' }"
+        v-model="current"
+      >
+        <a-menu-item key="1">
+          <NuxtLink to="/insights">Insights</NuxtLink>
+        </a-menu-item>
+      </a-menu>
+
+    </a-layout-header>
+    <a-layout-content style="padding: 20px 50px;">
+      <Nuxt />
+    </a-layout-content>
+  </section>
 </template>
 
+<script>
+export default {
+  data() {
+    return { current: ["1"] };
+  },
+};
+</script>
 <style>
-html {
-  font-family:
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  font-size: 16px;
-  word-spacing: 1px;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
+html,body {
+  height:100% !important;
+  background: #f2f2f2 !important;
 }
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-}
-
-.button--green {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
-  text-decoration: none;
-  padding: 10px 30px;
-}
-
-.button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
-}
-
-.button--grey {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
-}
-
-.button--grey:hover {
-  color: #fff;
-  background-color: #35495e;
+.logo {
+  height: 35px;
+  margin: 16px 25px 16px 25px;
+  float: left;
 }
 </style>
