@@ -8,8 +8,17 @@ export default {
       { hid: 'description', name: 'description', content: '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/png', href: 'https://yearend.com/assets/img/favicon-32x32.png?v=e06c32e2bc' }
     ]
+  },
+
+  router: {
+    middleware: 'authenticated'
+  },
+
+  loading: {
+    color: '#23af9f',
+    height: '5px',
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
@@ -30,8 +39,8 @@ export default {
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
-  modules: [
-  ],
+  modules: ['@nuxtjs/axios'],
+
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
